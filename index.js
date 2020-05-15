@@ -1,13 +1,15 @@
 const { printCmdLineOptions, getCmdLineOptions } = require('./shell')
-const { getStatus } = require('./github')
+const { init } = require('./github')
 
 ;(async () => {
-  const { id } = getCmdLineOptions()
+  const { id, accessToken, owner, repo } = getCmdLineOptions()
 
-  if (!id) {
+  if (!id || !accessToken || !owner || !repo) {
     printCmdLineOptions()
     return
   }
 
-  console.log(await getStatus(id))
+  const github = init(accessToken, owner, repo)
+
+  console.log(await github.getPr(id))
 })()

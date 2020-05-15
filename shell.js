@@ -8,6 +8,19 @@ const optionDefinitions = [
     name: 'id',
     description: 'The PR id',
   },
+  {
+    name: 'accessToken',
+    description:
+      'Your private access token, generated from https://github.com/settings/tokens',
+  },
+  {
+    name: 'owner',
+    description: 'The PR owner',
+  },
+  {
+    name: 'repo',
+    description: 'The PR repo',
+  },
 ]
 
 const sections = [
