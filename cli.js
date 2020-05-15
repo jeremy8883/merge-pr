@@ -27,7 +27,7 @@ const sections = [
     content:
       'Automatically polls the current repo, and will alert when the light turns green.\n' +
       'eg:' +
-      '  node index.js --id 123 --accessToken abc123eee --owner my-company --repo my-repo',
+      '  node index.js --accessToken abc123eee --owner my-company --repo my-repo --id 123',
   },
   {
     header: 'Options',
