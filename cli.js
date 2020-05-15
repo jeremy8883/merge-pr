@@ -1,7 +1,5 @@
 const commandLineArgs = require('command-line-args')
 const commandLineUsage = require('command-line-usage')
-const util = require('util')
-const exec = util.promisify(require('child_process').exec)
 
 const optionDefinitions = [
   {
@@ -27,7 +25,9 @@ const sections = [
   {
     header: 'Merge PR',
     content:
-      'Automatically polls the current repo, and will alert when the light turns green.',
+      'Automatically polls the current repo, and will alert when the light turns green.\n' +
+      'eg:' +
+      '  node index.js --id 123 --accessToken abc123eee --owner my-company --repo my-repo',
   },
   {
     header: 'Options',
@@ -44,16 +44,7 @@ const getCmdLineOptions = () => {
   return commandLineArgs(optionDefinitions)
 }
 
-const runCmd = async (cmd) => {
-  const { stdout, stderr } = await exec(cmd)
-  if (stderr) {
-    throw new Error(stderr)
-  }
-  return stdout
-}
-
 module.exports = {
   printCmdLineOptions,
   getCmdLineOptions,
-  runCmd,
 }
