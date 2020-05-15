@@ -2,7 +2,7 @@ const notifier = require('node-notifier')
 const colors = require('colors/safe')
 
 const notifyError = (error) => {
-  console.error(colors.red.bold('Error:') + colors.red(message))
+  console.error(colors.red.bold('Error: ') + colors.red(error.message))
   notifier.notify({
     title: 'Error',
     message: error.message,

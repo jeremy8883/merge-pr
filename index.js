@@ -5,13 +5,17 @@ const { notifySuccess, notifyError } = require('./utils/alerts')
 
 const pollTimeout = 60 * 1000 // 60 secs
 
-const fetchPrAndAttemptMerge = async (github, id) => {
+const fetchPrAndAttemptMerge = async (github, id, iterationCount) => {
   console.log(`Fetching PR #${id}`)
 
   const pr = await github.getPr(id)
 
-  console.log(`Fetched ${pr.head.ref}, "${pr.title}"`)
-  console.log(pr.html_url)
+  if (iterationCount === 0) {
+    console.log('--------------')
+    console.log(`Fetched ${pr.head.ref}, "${pr.title}"`)
+    console.log(pr.html_url)
+    console.log('--------------')
+  }
 
   if (pr.merged) throw new Error('PR is already merged')
 
@@ -74,12 +78,13 @@ const fetchPrAndAttemptMerge = async (github, id) => {
     const github = init(accessToken, owner, repo)
 
     await pollUntilComplete(
-      () => fetchPrAndAttemptMerge(github, id),
+      (count) => fetchPrAndAttemptMerge(github, id, count),
       pollTimeout
     )
 
     notifySuccess('PR has been merged!')
   } catch (ex) {
     notifyError(ex)
+    process.exit() // Otherwise, it takes a few seconds for the script to finish
   }
 })()
