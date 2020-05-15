@@ -1,6 +1,7 @@
 const { init } = require('./utils/github')
 const { pollUntilComplete } = require('./utils/timeout')
 const { printCmdLineOptions, getCmdLineOptions } = require('./cli')
+const { notifySuccess, notifyError } = require('./utils/alerts')
 
 const pollTimeout = 60 * 1000 // 60 secs
 
@@ -61,23 +62,24 @@ const fetchPrAndAttemptMerge = async (github, id) => {
   return true
 }
 
-const run = async () => {
-  const { id, accessToken, owner, repo } = getCmdLineOptions()
-
-  if (!id || !accessToken || !owner || !repo) {
-    printCmdLineOptions()
-    return
-  }
-
-  const github = init(accessToken, owner, repo)
-
-  await pollUntilComplete(() => fetchPrAndAttemptMerge(github, id), pollTimeout)
-}
-
 ;(async () => {
   try {
-    await run()
+    const { id, accessToken, owner, repo } = getCmdLineOptions()
+
+    if (!id || !accessToken || !owner || !repo) {
+      printCmdLineOptions()
+      return
+    }
+
+    const github = init(accessToken, owner, repo)
+
+    await pollUntilComplete(
+      () => fetchPrAndAttemptMerge(github, id),
+      pollTimeout
+    )
+
+    notifySuccess('PR has been merged!')
   } catch (ex) {
-    console.error(ex)
+    notifyError(ex)
   }
 })()
