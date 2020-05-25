@@ -35,10 +35,8 @@ const fetchPrAndAttemptMerge = async (github, id, iterationCount) => {
     // failure | pending | success
     const failedChecks = status.statuses
       .filter((s) => s.state !== 'success') // Show the failed and pending ci checks
-      .map((s) => {
-        s.state + ' - ' + s.context + '\n' + s.target_url
-      })
-      .join('----\n')
+      .map((s) => s.state + ' - ' + s.context + '\n' + s.target_url)
+      .join('\n----\n')
 
     throw new Error(
       'CI checks failed! Please fix then run again.\n-------\n' +
