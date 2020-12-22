@@ -13,7 +13,7 @@
     "colors": "^1.4.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.1.0",
-    "node-notifier": "^7.0.0"
+    "node-notifier": "^8.0.1"
   },
   "devDependencies": {
     "prettier": "^2.0.5"
