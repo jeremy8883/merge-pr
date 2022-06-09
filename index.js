@@ -10,6 +10,8 @@ const fetchPrAndAttemptMerge = async (github, id, iterationCount) => {
 
   const pr = await github.getPr(id)
 
+  // console.log(pr);
+
   if (iterationCount === 0) {
     console.log('--------------')
     console.log(`Fetched ${pr.head.ref}, "${pr.title}"`)
@@ -45,13 +47,10 @@ const fetchPrAndAttemptMerge = async (github, id, iterationCount) => {
     )
   }
 
-  if (status.state === 'pending') {
-    console.log('CI is currently pending')
-    return false
-  }
+  // console.log("Status: ", status);
 
-  if (pr.mergeable_state === 'blocked') {
-    console.log('PR is not yet approved')
+  if (pr.mergeable_state !== 'clean') {
+    console.log('PR is not yet ready')
     return false
   }
 
