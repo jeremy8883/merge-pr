@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@octokit/rest": "^17.9.0",
+    "@octokit/rest": "^19.0.13",
     "colors": "^1.4.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.1.0",
